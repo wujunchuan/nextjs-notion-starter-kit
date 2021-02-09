@@ -11,16 +11,20 @@
   background-color: rgba(17, 24, 39, 1);
   border-color: rgba(55, 65, 81, 1);
 }
-.notion code {
-  color: rgba(31, 41, 55, 1);
-  border: 0 none !important;
-  box-shadow: none !important;
-  background: none !important;
-  padding: 0 !important;
+
+/* inline-code style */
+.notion .notion-inline-code {
+  background: rgb(247, 246, 243);
 }
+
 .dark-mode .notion code {
   color: rgba(229, 231, 235, 1);
 }
+
+.notion-list-disc {
+  width: 100%;
+}
+
 .token.cdata,
 .token.doctype,
 .token.prolog {
