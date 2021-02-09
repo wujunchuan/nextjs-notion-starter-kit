@@ -12,13 +12,14 @@
   border-color: rgba(55, 65, 81, 1);
 }
 
-/* inline-code style */
-.notion .notion-inline-code {
+/* inline-code style (light theme) */
+.light-mode .notion-inline-code {
   background: rgb(247, 246, 243);
 }
 
-.dark-mode .notion code {
-  color: rgba(229, 231, 235, 1);
+/* inline-code style (dark theme) */
+.dark-mode .notion-inline-code {
+  color: #eb5757;
 }
 
 .notion-list-disc {
