@@ -12,8 +12,8 @@ module.exports = {
   author: 'John Trump',
 
   // open graph metadata (optional)
-  description: 'Example site description',
-  socialImageTitle: 'Transitive Bullshit',
+  description: "Trump's blog, front-end, javascript, nodejs",
+  socialImageTitle: '',
   socialImageSubtitle: 'Hello World! 👋',
 
   // social usernames (optional)
@@ -47,5 +47,8 @@ module.exports = {
   //   '067dd719a912471ea9a3ac10710e7fdf': '/foo',
   //   '0be6efce9daf42688f65c76b89f8eb27': '/bar'
   // }
-  pageUrlOverrides: null
+  pageUrlOverrides: {
+    /* 关于我 */
+    '070a37dbafb940db90d5156e7658671d': '/about'
+  }
 }
