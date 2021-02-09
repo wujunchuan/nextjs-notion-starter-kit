@@ -98,7 +98,8 @@ export const isServer = typeof window === 'undefined'
 
 // bug: 因为 port 导致的404
 export const port = getEnv('PORT', '3000')
-export const host = isDev ? `http://localhost:${3000}` : `https://${domain}`
+export const host = isDev ? `http://localhost:${port}` : `https://${domain}`
+console.log('====host====', host)
 
 export const apiBaseUrl = `${host}/api`
 
