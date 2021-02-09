@@ -8,7 +8,7 @@ module.exports = {
 
   // basic site info (required)
   name: "Mogic Time | Trump's blog",
-  domain: '',
+  domain: 'notion-blog-wujunchuan.vercel.app',
   author: 'John Trump',
 
   // open graph metadata (optional)
