@@ -9,6 +9,8 @@ import BodyClassName from 'react-body-classname'
 import useDarkMode from 'use-dark-mode'
 import { PageBlock } from 'notion-types'
 
+import { Tweet, TwitterContextProvider } from 'react-static-tweets'
+
 // core notion renderer
 import { NotionRenderer, Code, Collection, CollectionRow } from 'react-notion-x'
 
@@ -24,7 +26,6 @@ import * as config from 'lib/config'
 
 // components
 import { CustomFont } from './CustomFont'
-import { CustomHtml } from './CustomHtml'
 import { Loading } from './Loading'
 import { Page404 } from './Page404'
 import { PageHead } from './PageHead'
@@ -34,6 +35,7 @@ import { PageSocial } from './PageSocial'
 import { ReactUtterances } from './ReactUtterances'
 
 import styles from './styles.module.css'
+import { GitHubShareButton } from './GitHubShareButton'
 
 // const Code = dynamic(() =>
 //   import('react-notion-x').then((notion) => notion.Code)
@@ -56,12 +58,9 @@ const Equation = dynamic(() =>
   import('react-notion-x').then((notion) => notion.Equation)
 )
 
-const Tweet = dynamic(
-  () => import('react-notion-x').then((notion) => notion.Tweet),
-  {
-    ssr: false
-  }
-)
+// we're now using a much lighter-weight tweet renderer react-static-tweets
+// instead of the official iframe-based embed widget from twitter
+// const Tweet = dynamic(() => import('react-tweet-embed'))
 
 const Modal = dynamic(
   () => import('react-notion-x').then((notion) => notion.Modal),
@@ -110,8 +109,9 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   if (!config.isServer) {
-    // add important objects global window for easy debugging
+    // add important objects to the window global for easy debugging
     const g = window as any
+    g.pageId = pageId
     g.recordMap = recordMap
     g.block = block
   }
@@ -128,11 +128,10 @@ export const NotionPage: React.FC<types.PageProps> = ({
   const showTableOfContents = !!isBlogPost
   const minTableOfContentsItems = 3
 
-  const socialImage =
-    mapNotionImageUrl(
-      (block as PageBlock).format?.page_cover || config.defaultPageCover,
-      block
-    ) || config.api.renderSocialImage(pageId)
+  const socialImage = mapNotionImageUrl(
+    (block as PageBlock).format?.page_cover || config.defaultPageCover,
+    block
+  )
 
   const socialDescription =
     getPageDescription(block, recordMap) ?? config.description
@@ -162,7 +161,15 @@ export const NotionPage: React.FC<types.PageProps> = ({
   }
 
   return (
-    <>
+    <TwitterContextProvider
+      value={{
+        tweetAstMap: (recordMap as any).tweetAstMap || {},
+        swrOptions: {
+          fetcher: (id) =>
+            fetch(`/api/get-tweet-ast/${id}`).then((r) => r.json())
+        }
+      }}
+    >
       <PageHead site={site} />
 
       <Head>
@@ -271,9 +278,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
         }
       />
 
-      {/* <GitHubShareButton /> */}
-
-      <CustomHtml site={site} />
-    </>
+      <GitHubShareButton />
+    </TwitterContextProvider>
   )
 }
