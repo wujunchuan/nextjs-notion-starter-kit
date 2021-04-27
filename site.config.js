@@ -49,6 +49,6 @@ module.exports = {
   // }
   pageUrlOverrides: {
     /* 关于我 */
-    '070a37dbafb940db90d5156e7658671d': '/about'
+    '/about': '070a37dbafb940db90d5156e7658671d'
   }
 }
